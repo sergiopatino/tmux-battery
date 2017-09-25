@@ -3,7 +3,7 @@
 Enables displaying battery percentage and status icon in tmux status-right.
 
 ## Installation
-### Intallation with [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) (recommended)
+### Installation with [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) (recommended)
 
 Add plugin to the list of TPM plugins in `.tmux.conf`:
 
@@ -65,7 +65,7 @@ Battery between 50% and 16% charged:<br/>
 Battery between 15% and dead:<br/>
 ![battery_status_bg_red](/screenshots/battery_status_bg_red.png)
 
-This is done by introducing 4 new format strings that can be added to
+This is done by introducing new format strings that can be added to
 `status-right` option:
 - `#{battery_icon}` - will display a battery status icon
 - `#{battery_percentage}` - will show battery percentage
@@ -80,7 +80,7 @@ By default, these icons are displayed:
 
  - charged: ":battery:" ("❇ " when not on OS X)
  - charging: ":zap:"
- - discharging: (nothing shown)
+ - discharging: Moon icons depending on your battery level
  - attached but not charging: ":warning:"
 
 You can change these defaults by adding the following to `.tmux.conf` (the
@@ -90,11 +90,24 @@ following lines are not in the code block so that emojis can be seen):
  - set -g @batt_charging_icon ":+1:"
  - set -g @batt_discharging_icon ":thumbsdown:"
  - set -g @batt_attached_icon ":neutral_face:"
+ - set -g @batt_full_charge_icon "🌕 "
+ - set -g @batt_high_charge_icon "🌖 "
+ - set -g @batt_medium_charge_icon "🌗 "
+ - set -g @batt_low_charge_icon "🌘 "
 
 Don't forget to reload tmux environment (`$ tmux source-file ~/.tmux.conf`)
 after you do this.
 
 *Warning*: The battery icon change most likely will not be instant. When you un-plug the power cord, it will take some time (15 - 60 seconds) for the icon to change. This depends on the `status-interval` tmux option. Setting it to 15 seconds should be good enough.
+
+## Shortened remaining output
+
+To shorten the output of `#{battery_remain}`, set the following variable:
+
+    set -g @batt_remain_short true
+
+This will hide output if the battery is charging or charged, and shorten the
+time remaining (when discharging) to `~H:MM`.
 
 ### Tmux Plugins
 
